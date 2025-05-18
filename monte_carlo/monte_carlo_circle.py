@@ -1,19 +1,26 @@
 #%%
 import random
-import numpy as np
-import matplotlib.pyplot as plt
 
 def monte_carlo_circle_area(radius, num_points=100000):
-    """
-    Estimate the area of a circle using the Monte Carlo method.
+    """Estimate the area of a circle using the Monte Carlo method.
 
-    Parameters:
-        radius (float): Radius of the circle.
-        num_points (int): Number of random points to generate.
+    Parameters
+    ----------
+    radius : float
+        Radius of the circle. Must be positive.
+    num_points : int, optional
+        Number of random points to generate. Must be positive.
 
-    Returns:
-        float: Estimated area of the circle.
+    Returns
+    -------
+    float
+        Estimated area of the circle.
     """
+    if radius <= 0:
+        raise ValueError("radius must be positive")
+    if num_points <= 0:
+        raise ValueError("num_points must be positive")
+
     inside_circle = 0
 
     for _ in range(num_points):
@@ -34,11 +41,13 @@ def monte_carlo_circle_area(radius, num_points=100000):
     return circle_area
 
 if __name__ == "__main__":
+    import matplotlib.pyplot as plt
+
     radius = 1
-    estimated_area = np.array([])
+    estimated_area = []
 
     for num_points in range(1000, 1000000, 5000):
-        estimated_area = np.append(estimated_area, monte_carlo_circle_area(radius, num_points))
+        estimated_area.append(monte_carlo_circle_area(radius, num_points))
     
     fig, ax = plt.subplots()
     ax.plot(range(1000, 1000000, 5000), estimated_area)
